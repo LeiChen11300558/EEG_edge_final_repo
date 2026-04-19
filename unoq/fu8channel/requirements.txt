@@ -1,0 +1,2 @@
+numpy
+tflite-runtime

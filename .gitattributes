@@ -1,0 +1,6 @@
+pc/EEGdenoiseNetfuplot200hzmutiple_channel/data/cho2017_s01.mat filter=lfs diff=lfs merge=lfs -text
+pc/EEGdenoiseNetfuplot200hzmutiple_channel/data/bnci2014001_8ch_merged/EEG_all_epochs_bnci2014001_8ch.npy filter=lfs diff=lfs merge=lfs -text
+pc/EEGdenoiseNetfuplot200hzmutiple_channel/data/bnci2014001_8ch_merged/EOG_projected_epochs_bnci2014001_8ch.npy filter=lfs diff=lfs merge=lfs -text
+unoq/fu8channel/code/fu8_large_200hz filter=lfs diff=lfs merge=lfs -text
+unoq/fu8channel/data/EEG_test.npy filter=lfs diff=lfs merge=lfs -text
+unoq/fu8channel/data/noiseinput_test.npy filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,22 @@
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE and caches
+.idea/
+.cache/
+.venv/
+
+# Upstream nested repositories
+**/.git/
+
+# Common generated outputs
+**/outputs/
+**/checkpoints/
+**/E_/
+*.log
+
+# Optional local large artefacts added later
+# Use Git LFS if you need to version files above GitHub's normal size limit.
