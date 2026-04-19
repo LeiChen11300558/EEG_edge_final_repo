@@ -76,11 +76,19 @@ This repository contains both adapted open-source code and project-specific code
 ### Code adapted from existing open-source repositories
 
 - `pc/EEGdenoiseNetfuplot/`, `pc/EEGdenoiseNetfuplot200hz/`, and `pc/EEGdenoiseNetfuplot200hzmutiple_channel/`
-  These folders are based on the EEGdenoiseNet repository and were modified in this project for FCNN experiments, plotting, 200 Hz adaptation, and the multi-channel extension.
+  These folders are based on the EEGdenoiseNet repository:
+  <https://github.com/ncclabsustech/EEGdenoiseNet>
+  They were modified in this project for FCNN experiments, plotting, 200 Hz adaptation, and the multi-channel extension.
 - `pc/Autoencoder_transferlearning/`
-  This folder is based on the Autoencoder repository and was modified in this project for reproduction, transfer learning, quantization, and TensorFlow Lite export.
+  This folder is based on the Autoencoder repository:
+  <https://github.com/Non-Invasive-Bioelectronics-Lab/Autoencoder>
+  It was modified in this project for reproduction, transfer learning, quantization, and TensorFlow Lite export.
 - Parts of `unoq/ML_testing/`
-  The inference-side implementation was adapted from the `autoencoder_coral_mini` example in the `tensorflow-lite-microcontroller-autoencoder` repository and then modified for Arduino UNO Q execution, timing measurement, and denoising evaluation.
+  The inference-side implementation was adapted from the `autoencoder_coral_mini` example in the following repository:
+  <https://github.com/Non-Invasive-Bioelectronics-Lab/tensorflow-lite-microcontroller-autoencoder>
+  It was then modified for Arduino UNO Q execution, timing measurement, and denoising evaluation.
+
+The links above are the original upstream repositories used as starting points. This repository is not a mirror of those projects. It contains the project version used in this individual project, including local changes, added deployment code, bridge communication code, and the later multi-channel extension work.
 
 ### Code developed mainly in this project
 
@@ -113,4 +121,4 @@ Please install the dependencies from the relevant local `requirements.txt` file 
 
 - This repository includes code, runtime artefacts, and experiment files that were kept to match the practical workflow used during the project.
 - Some folders still reflect the structure of the original upstream repositories, while others were added specifically for deployment and system integration.
-- If this repository is used for public release, the upstream repositories and dataset sources should also be acknowledged clearly in the final published README.
+- The upstream repositories listed above are acknowledged here because parts of this project were developed by adapting code from them.
