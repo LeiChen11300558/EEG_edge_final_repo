@@ -128,6 +128,8 @@ print("Average per segment: {:.6f} s ({:.2f} ms)".format(
     avg_single, avg_single * 1000.0))
 print("Min / Max per segment: {:.6f} s / {:.6f} s".format(
     min_single, max_single))
+print("First segment: {:.6f} s ({:.2f} ms)".format(
+    single_segment_inference_times[0], single_segment_inference_times[0] * 1000.0))
 
 print("\nWall-clock time (including loop overhead): {:.6f} s".format(wall_clock_time))
 print("Inference only finished.")
