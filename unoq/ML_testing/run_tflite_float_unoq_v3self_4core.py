@@ -60,19 +60,20 @@ start_time = time.time()
 results = []
 
 for segment in test_data:
+    segment_start = time.time()
+
     # set input tensor
     interpreter.set_tensor(input_details[0]['index'], segment.reshape((1, 800)))
 
     # run inference（测量单个样本耗时）
-    segment_start = time.time()
     interpreter.invoke()
-    segment_end = time.time()
-
-    single_segment_inference_times.append(segment_end - segment_start)
 
     # get the output
     output_data = interpreter.get_tensor(output_details[0]['index'])
     results.append(output_data)
+
+    segment_end = time.time()
+    single_segment_inference_times.append(segment_end - segment_start)
 
 # calculate the elapsed time
 end_time = time.time()

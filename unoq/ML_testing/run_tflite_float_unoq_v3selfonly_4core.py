@@ -71,7 +71,6 @@ for segment in test_data:
     results.append(output_data)
 
 end_time = time.time()
-total_inference_time = end_time - start_time
 
 # ====================== Post-process outputs ======================
 results = np.array(results)
@@ -88,7 +87,7 @@ min_single = float(np.min(single_segment_inference_times))
 max_single = float(np.max(single_segment_inference_times))
 first_single = float(single_segment_inference_times[0]) if single_segment_inference_times.size > 0 else 0.0
 
-print("Total inference time: {:.2f} seconds".format(total_inference_time))
+print("Total inference time: {:.2f} seconds".format(float(np.sum(single_segment_inference_times))))
 print("Average inference time per segment: {:.4f} s ({:.2f} ms)".format(avg_single, avg_single * 1000.0))
 print("Min / Max per-segment time: {:.4f} s / {:.4f} s".format(min_single, max_single))
 print("First segment inference time: {:.4f} s ({:.2f} ms)".format(first_single, first_single * 1000.0))

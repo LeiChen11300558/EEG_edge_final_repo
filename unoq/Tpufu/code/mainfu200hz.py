@@ -157,13 +157,13 @@ print("Using N =", num_segments, ", segment_len =", segment_len)
 
 
 # ====================== 4. Inference + timing ======================
-total_inference_time = 0.0
 single_segment_inference_times = []
 results = []
 
 start_all = time.time()
 
 for segment in noisy_2d:
+    segment_start = time.time()
     segment = segment.astype(np.float32)
 
     if len(input_shape) == 3:
@@ -174,21 +174,17 @@ for segment in noisy_2d:
         raise ValueError("Unsupported input_shape: {}".format(input_shape))
 
     interpreter.set_tensor(input_details[0]["index"], segment_reshaped)
-
-    t0 = time.time()
     interpreter.invoke()
-    t1 = time.time()
-
-    dt = t1 - t0
-    total_inference_time += dt
-    single_segment_inference_times.append(dt)
 
     out = interpreter.get_tensor(output_details[0]["index"])
     out = np.squeeze(out)
     results.append(out)
 
+    segment_end = time.time()
+    single_segment_inference_times.append(segment_end - segment_start)
+
 end_all = time.time()
-wall_clock_time = end_all - start_all
+total_inference_time = end_all - start_all
 
 results = np.array(results, dtype=np.float32)
 decoded_2d = results.reshape(num_segments, segment_len)
@@ -200,15 +196,14 @@ avg_single = single_segment_inference_times.mean()
 min_single = single_segment_inference_times.min()
 max_single = single_segment_inference_times.max()
 
-print("\n==== Inference time (invoke only) ====")
-print("Total invoke time: {:.6f} s".format(total_inference_time))
-print("Average per segment: {:.6f} s ({:.2f} ms)".format(
+print("\n==== Inference time ====")
+print("Total inference time: {:.6f} s".format(total_inference_time))
+print("Average inference time per segment: {:.6f} s ({:.2f} ms)".format(
     avg_single, avg_single * 1000.0))
-print("Min / Max per segment: {:.6f} s / {:.6f} s".format(
+print("Min / Max per-segment time: {:.6f} s / {:.6f} s".format(
     min_single, max_single))
-print("First segment: {:.6f} s ({:.2f} ms)".format(
+print("First segment inference time: {:.6f} s ({:.2f} ms)".format(
     single_segment_inference_times[0], single_segment_inference_times[0] * 1000.0))
-print("\nWall-clock time (including loop overhead): {:.6f} s".format(wall_clock_time))
 
 
 # ====================== 5. Zero-centering ======================

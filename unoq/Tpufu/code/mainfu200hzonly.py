@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import numpy as np
 import os
 import time
@@ -19,11 +19,11 @@ def resample_1d_batch(data, target_len):
     return out
 
 # ====================== 1. 璺緞涓庢ā鍨嬭缃?======================
-SAVE_OUTPUT = False  
+SAVE_OUTPUT = False
 current_path = os.path.dirname(os.path.abspath(__file__))
 
 # ---> 淇敼涓轰綘鏂颁笂浼犵殑妯″瀷鍚嶇О <---
-MODEL_NAME = "fu200hz"   
+MODEL_NAME = "fu200hz"
 
 data_dir = os.path.join(current_path, "..", "data")
 NOISY_NAME = "noiseinput_test.npy"
@@ -55,12 +55,11 @@ noisy = np.load(noisy_path)
 if noisy.ndim == 1:
     noisy = noisy.reshape(1, -1)
 elif noisy.ndim == 3 and noisy.shape[-1] == 1:
-    noisy = noisy[..., 0] 
+    noisy = noisy[..., 0]
 
 orig_len = noisy.shape[1]
 N = noisy.shape[0]
 
-# ---> 鏍稿績锛氬鏋滀綘璇诲彇鐨勬暟鎹暱搴﹀拰妯″瀷涓嶅尮閰嶏紝鑷姩璋冪敤 scipy 杩涜闄嶉噰鏍?<---
 if orig_len != target_len:
     print(f"Data length mismatch! Resampling from {orig_len} to {target_len} points...")
     noisy = resample_1d_batch(noisy, target_len)
@@ -75,11 +74,10 @@ single_segment_inference_times = []
 results = []
 
 print("\n==== Start inference only ====")
-start_all = time.time()
 
 for i in range(N):
     segment_1d = noisy[i].astype(np.float32)
-    
+
     # 閫傞厤 fcNN 鐨勮緭鍏ュ舰鐘? (1, target_len)
     segment_reshaped = segment_1d.reshape(1, target_len)
     interpreter.set_tensor(input_details[0]['index'], segment_reshaped)
@@ -97,9 +95,6 @@ for i in range(N):
     out = interpreter.get_tensor(output_details[0]['index'])
     results.append(np.squeeze(out))
 
-end_all = time.time()
-wall_clock_time = end_all - start_all
-
 # ====================== 5. 鎵撳嵃鏋侀檺娴嬭瘯鎸囨爣 ======================
 single_segment_inference_times = np.array(single_segment_inference_times, dtype=np.float64)
 
@@ -107,10 +102,9 @@ avg_single = single_segment_inference_times.mean()
 min_single = single_segment_inference_times.min()
 max_single = single_segment_inference_times.max()
 
-print("\n==== Inference time (invoke only) ====")
-print(f"Total invoke time: {total_inference_time:.6f} s")
-print(f"Average per segment: {avg_single:.6f} s ({avg_single * 1000.0:.2f} ms)")
-print(f"Min / Max per segment: {min_single:.6f} s / {max_single:.6f} s")
-print(f"First segment: {single_segment_inference_times[0]:.6f} s ({single_segment_inference_times[0] * 1000.0:.2f} ms)")
-print(f"\nWall-clock time (including loop overhead): {wall_clock_time:.6f} s")
+print("\n==== Inference time ====")
+print(f"Total inference time: {total_inference_time:.6f} s")
+print(f"Average inference time per segment: {avg_single:.6f} s ({avg_single * 1000.0:.2f} ms)")
+print(f"Min / Max per-segment time: {min_single:.6f} s / {max_single:.6f} s")
+print(f"First segment inference time: {single_segment_inference_times[0]:.6f} s ({single_segment_inference_times[0] * 1000.0:.2f} ms)")
 print("Inference only finished.")
